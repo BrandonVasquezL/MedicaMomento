@@ -48,6 +48,7 @@
         android:ems="25"
         android:hint="Nombre del medicamento"
         android:inputType="textPersonName"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.843"
@@ -65,7 +66,7 @@
         app:srcCompat="@drawable/bars" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/etxt_dosis"
         android:layout_width="283dp"
         android:layout_height="58dp"
         android:ems="10"
@@ -83,7 +84,7 @@
         android:layout_width="42dp"
         android:layout_height="54dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextDate"
+        app:layout_constraintEnd_toStartOf="@+id/etxt_fecha"
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
@@ -91,7 +92,7 @@
         app:srcCompat="@drawable/date" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/etxt_fecha"
         android:layout_width="283dp"
         android:layout_height="58dp"
         android:layout_marginTop="28dp"
@@ -101,21 +102,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.828"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/etxt_dosis" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="42dp"
         android:layout_height="54dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTime"
+        app:layout_constraintEnd_toStartOf="@+id/etxt_hora"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
         app:layout_constraintVertical_bias="0.182"
         app:srcCompat="@drawable/reloj" />
 
     <EditText
-        android:id="@+id/editTextTime"
+        android:id="@+id/etxt_hora"
         android:layout_width="283dp"
         android:layout_height="58dp"
 
@@ -125,7 +126,7 @@
         android:inputType="time"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
+        app:layout_constraintTop_toBottomOf="@+id/etxt_fecha"
         app:layout_constraintVertical_bias="0.17" />
 
     <Button

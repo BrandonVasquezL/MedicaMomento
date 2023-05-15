@@ -2,12 +2,16 @@ package com.example.medicamomento
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.BaseColumns
 import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -15,6 +19,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val dbHelper = DBhelper(applicationContext)
+        val db = dbHelper.writableDatabase
+        val cursor = db.query(Constants.medicinas.TABLE_NAME,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+        val medicinas = ArrayList<String>()
+            while (cursor.moveToNext()) {
+                val id = cursor.getString(cursor.getColumnIndexOrThrow(BaseColumns._ID))
+                val medicina = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_MEDICAMENTO))
+                val dosis = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_DOSIS))
+                val fecha = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_FECHA))
+                val hora = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_HORARIO))
+                val medicamento = "$id $medicina $dosis $fecha $hora"
+                medicinas.add(medicamento)
+            }
+
+        val arrayAdapter = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_list_item_1,
+            medicinas
+        )
+
+        val list_med = findViewById<ListView>(R.id.listv_medicinas)
+        list_med.adapter = arrayAdapter
+
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -25,7 +60,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
