@@ -24,7 +24,7 @@
         app:itemIconTint="@color/lavender"
         app:itemTextColor="@color/black"/>-->
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="409dp"
         android:layout_height="729dp"
         tools:layout_editor_absoluteX="1dp"
@@ -33,5 +33,5 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
