@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,17 +23,18 @@ class AgregarMedicamento : AppCompatActivity() {
     private lateinit var et_Dosis: EditText
     private lateinit var et_Fecha: EditText
     private lateinit var et_Hora: EditText
+    private lateinit var sp_cant: Spinner
 
     var medicamento: String? = null
     var dosis: String? = null
     var fecha: String? = null
     var hora: String? = null
+    var cant: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_medicamento)
 
         /*cameraPermision = String[]{Manifest.permission.CAMERA, Manifest.Perm}*/
-
 
         val btnCamara = findViewById<ImageView>(R.id.btnCamara)
         btnCamara.setOnClickListener{
@@ -67,13 +69,14 @@ class AgregarMedicamento : AppCompatActivity() {
             et_Dosis = findViewById(R.id.etxt_dosis)
             et_Fecha = findViewById(R.id.etxt_fecha)
             et_Hora = findViewById(R.id.etxt_hora)
-
+            sp_cant = findViewById(R.id.spinner)
+            cant = sp_cant.selectedItem.toString()
 
             val dbHelper = DBhelper(applicationContext)
             val db = dbHelper.writableDatabase
 
             medicamento = et_Medicamento.text.toString()
-            dosis = et_Dosis.text.toString()
+            dosis = et_Dosis.text.toString() + " " +cant
             fecha = et_Fecha.text.toString()
             hora = et_Hora.text.toString()
 
