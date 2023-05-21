@@ -27,6 +27,7 @@ class AgregarMedicamento : AppCompatActivity() {
 
     var medicamento: String? = null
     var dosis: String? = null
+    var dosis2: String? = null
     var fecha: String? = null
     var hora: String? = null
     var cant: String? = null
@@ -82,28 +83,55 @@ class AgregarMedicamento : AppCompatActivity() {
         }
         startActivity(intent)
     }
+    fun validateMedicamento(): Boolean {
+        var retorno = true
+
+        et_Medicamento = findViewById(R.id.etxt_medicamento)
+        et_Dosis = findViewById(R.id.etxt_dosis)
+        et_Fecha = findViewById(R.id.etxt_fecha)
+        et_Hora = findViewById(R.id.etxt_hora)
+        sp_cant = findViewById(R.id.spinner)
+
+
+        medicamento = et_Medicamento.text.toString()
+        dosis = et_Dosis.text.toString()
+        fecha = et_Fecha.text.toString()
+        hora = et_Hora.text.toString()
+
+        if (medicamento!!.isEmpty()) {
+            et_Medicamento.setError("Campo Vacio")
+            retorno = false
+        }
+        if (dosis!!.isEmpty()) {
+            et_Dosis.setError("Campo Vacio")
+            retorno = false
+        }
+        if (fecha!!.isEmpty()) {
+            et_Fecha.setError("Campo Vacio")
+            retorno = false
+        }
+        if (hora!!.isEmpty()) {
+            et_Hora.setError("Campo Vacio")
+            retorno = false
+        }
+        return retorno
+    }
     fun GuardarMedicamento(view: View){
+        if(validateMedicamento()){
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra(AlarmClock.EXTRA_MESSAGE, "Creacion de medicamento")
-            et_Medicamento = findViewById(R.id.etxt_medicamento)
-            et_Dosis = findViewById(R.id.etxt_dosis)
-            et_Fecha = findViewById(R.id.etxt_fecha)
-            et_Hora = findViewById(R.id.etxt_hora)
-            sp_cant = findViewById(R.id.spinner)
-            cant = sp_cant.selectedItem.toString()
+
 
             val dbHelper = DBhelper(applicationContext)
             val db = dbHelper.writableDatabase
+            cant = sp_cant.selectedItem.toString()
 
-            medicamento = et_Medicamento.text.toString()
-            dosis = et_Dosis.text.toString() + " " +cant
-            fecha = et_Fecha.text.toString()
-            hora = et_Hora.text.toString()
+
 
 
             val values = ContentValues().apply {
                 put(Constants.medicinas.COLUMN_MEDICAMENTO, medicamento)
-                put(Constants.medicinas.COLUMN_DOSIS, dosis)
+                put(Constants.medicinas.COLUMN_DOSIS, dosis + " "+cant)
                 put(Constants.medicinas.COLUMN_FECHA, fecha)
                 put(Constants.medicinas.COLUMN_HORARIO, hora)
             }
@@ -112,6 +140,8 @@ class AgregarMedicamento : AppCompatActivity() {
 
             Toast.makeText(applicationContext,idc,Toast.LENGTH_SHORT).show()
         }
+
         startActivity(intent)
+        }
     }
 }
