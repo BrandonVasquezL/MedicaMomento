@@ -15,9 +15,11 @@ import androidx.fragment.app.Fragment
 import com.example.medicamomento.fragments.Inicio
 import com.example.medicamomento.fragments.Medicamentos
 import com.example.medicamomento.fragments.Perfil
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var bottom_Navigation: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +68,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         //bottom nav
-        val inicio = Inicio()
+      /*  val inicio = Inicio()
         val medicamentos = Medicamentos()
         val perfil = Perfil()
 
@@ -80,7 +82,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 R.id.bnPerfil -> makeCurrentFragment(perfil)
             }
             true
-        }
+        }*/
     }
 
     private fun makeCurrentFragment(fragment: Fragment) =
