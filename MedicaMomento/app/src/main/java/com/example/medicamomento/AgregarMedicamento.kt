@@ -33,6 +33,8 @@ class AgregarMedicamento : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_medicamento)
+        et_Fecha = findViewById(R.id.etxt_fecha)
+        et_Fecha.setOnClickListener { showDatePickerDialog() }
 
         /*cameraPermision = String[]{Manifest.permission.CAMERA, Manifest.Perm}*/
 
@@ -41,8 +43,15 @@ class AgregarMedicamento : AppCompatActivity() {
             startForResult.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
         }
     }
-/*camara*/
 
+    //Calendario
+    private fun showDatePickerDialog() {
+        val datePicker = DatePickerFragment{day, month, year -> onDateSelected(day, month, year)}
+        datePicker.show(supportFragmentManager, "datPicker")
+    }
+    fun onDateSelected(day: Int, month:Int, year: Int){
+        et_Fecha.setText("$day/$month/$year")
+    }
 
 /*foto*/
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
