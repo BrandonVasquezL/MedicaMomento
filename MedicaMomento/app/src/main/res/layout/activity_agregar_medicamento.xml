@@ -121,11 +121,12 @@
         android:id="@+id/etxt_hora"
         android:layout_width="283dp"
         android:layout_height="58dp"
-
         android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="Intervalo de horas (00:00)"
         android:inputType="time"
+        android:clickable="false"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etxt_fecha"

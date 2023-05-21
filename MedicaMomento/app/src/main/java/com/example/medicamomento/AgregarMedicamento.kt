@@ -36,12 +36,23 @@ class AgregarMedicamento : AppCompatActivity() {
         et_Fecha = findViewById(R.id.etxt_fecha)
         et_Fecha.setOnClickListener { showDatePickerDialog() }
 
+        et_Hora = findViewById(R.id.etxt_hora)
+        et_Hora.setOnClickListener { showTimePickerDialog() }
+
         /*cameraPermision = String[]{Manifest.permission.CAMERA, Manifest.Perm}*/
 
         val btnCamara = findViewById<ImageView>(R.id.btnCamara)
         btnCamara.setOnClickListener{
             startForResult.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
         }
+    }
+
+    private fun showTimePickerDialog() {
+        val timePicker = TimePickerFragment {onTimeSelected(it)}
+        timePicker.show(supportFragmentManager, "time")
+    }
+    private fun onTimeSelected(time:String){
+        et_Hora.setText("$time")
     }
 
     //Calendario
