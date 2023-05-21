@@ -1,5 +1,6 @@
 package com.example.medicamomento
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.BaseColumns
@@ -19,11 +20,31 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var bottom_Navigation: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //bottomnav
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigationView.setSelectedItemId(R.id.bnInicio)
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.bnInicio -> true
+                R.id.bnMedicamentos -> {
+                    startActivity(Intent(applicationContext, Medicamentos::class.java))
+                    finish()
+                    true
+                }
+                R.id.bnPerfil -> {
+                    startActivity(Intent(applicationContext, AgregarPerfil::class.java))
+                    finish()
+                    true
+                }
+
+                else -> false
+            }
+        }
 
         val dbHelper = DBhelper(applicationContext)
         val db = dbHelper.writableDatabase
@@ -68,7 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         //bottom nav
-      /*  val inicio = Inicio()
+       /*val inicio = Inicio()
         val medicamentos = Medicamentos()
         val perfil = Perfil()
 

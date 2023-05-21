@@ -31,7 +31,7 @@
     <ImageView
         android:id="@+id/button4"
         android:layout_width="147dp"
-        android:layout_height="136dp"
+        android:layout_height="142dp"
         android:layout_marginTop="172dp"
         android:layout_marginEnd="36dp"
         android:background="@drawable/pastilla"
@@ -41,8 +41,8 @@
 
     <ImageView
         android:id="@+id/button5"
-        android:layout_width="141dp"
-        android:layout_height="147dp"
+        android:layout_width="147dp"
+        android:layout_height="142dp"
         android:layout_marginStart="48dp"
         android:background="@drawable/inhalador"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,8 +53,8 @@
 
     <ImageView
         android:id="@+id/button7"
-        android:layout_width="144dp"
-        android:layout_height="154dp"
+        android:layout_width="147dp"
+        android:layout_height="142dp"
         android:layout_marginEnd="36dp"
         android:background="@drawable/inyeccion"
         app:layout_constraintBottom_toBottomOf="parent"

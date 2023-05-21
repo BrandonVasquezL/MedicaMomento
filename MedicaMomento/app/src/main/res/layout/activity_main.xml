@@ -36,7 +36,7 @@
         <ListView
             android:id="@+id/listv_medicinas"
             android:layout_width="match_parent"
-            android:layout_height="646dp"
+            android:layout_height="664dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,12 +45,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_nav" />
 
-
     </LinearLayout>
+
 
 
 
@@ -63,7 +63,7 @@
         app:menu="@menu/nav_menu"
         app:itemIconTint="@color/lavender"
         app:itemTextColor="@color/black">
-
     </com.google.android.material.navigation.NavigationView>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
