@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+   <item android:icon="@drawable/baseline_person_24" android:title="Perfiles" >
+       <menu>
+           <item android:id="@+id/nav_supervisor"
+               android:icon="@drawable/baseline_star_border_24"
+               android:title="Supervisor"/>
+           <item android:id="@+id/nav_supervisado"
+               android:title="Supervisado"/>
+       </menu>
+   </item>
+    <group>
+        <item android:id="@+id/nav_registro"
+            android:icon="@drawable/baseline_fact_check_24"
+            android:title="Registro"/>
+
+        <item android:id="@+id/nav_comentario"
+            android:icon="@drawable/baseline_add_comment_24"
+            android:title="Comentarios"/>
+    </group>
+
+</menu>
