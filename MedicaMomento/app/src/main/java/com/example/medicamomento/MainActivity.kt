@@ -87,23 +87,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-
-        //bottom nav
-       /*val inicio = Inicio()
-        val medicamentos = Medicamentos()
-        val perfil = Perfil()
-
-        makeCurrentFragment(inicio)
-        
-
-        bottom_Navigation.setOnNavigationItemSelectedListener{
-            when(it.itemId){
-                R.id.bnInicio -> makeCurrentFragment(inicio)
-                R.id.bnMedicamentos -> makeCurrentFragment(medicamentos)
-                R.id.bnPerfil -> makeCurrentFragment(perfil)
-            }
-            true
-        }*/
     }
 
     private fun makeCurrentFragment(fragment: Fragment) =

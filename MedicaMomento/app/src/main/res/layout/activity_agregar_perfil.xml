@@ -10,7 +10,7 @@
         android:id="@+id/agregarP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="75dp"
+        android:layout_marginBottom="76dp"
         android:background="@drawable/boton_redondo"
         android:onClick="GuardarMedicamento"
         android:text="Guardar"
@@ -18,8 +18,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/btnEditar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="84dp"
+        android:background="@drawable/boton_redondo"
+        android:onClick="GuardarMedicamento"
+        android:text="Editar"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="84dp"
+        android:background="@drawable/boton_redondo"
+        android:onClick="GuardarMedicamento"
+        android:text="Guardar"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.892"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <EditText
-        android:id="@+id/editTextTextPersonName7"
+        android:id="@+id/edServicio"
         android:layout_width="283dp"
         android:layout_height="58dp"
         android:layout_marginTop="15dp"
@@ -30,11 +58,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName6"
+        app:layout_constraintTop_toBottomOf="@+id/edAlergias"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/edSangre"
         android:layout_width="283dp"
         android:layout_height="58dp"
         android:layout_marginTop="20dp"
@@ -44,13 +72,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/edEdad" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="Perfil medico"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,15 +90,15 @@
         android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="80dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
         app:srcCompat="@drawable/baseline_person_24" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/etname"
         android:layout_width="283dp"
         android:layout_height="58dp"
         android:layout_marginTop="12dp"
@@ -82,20 +110,20 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/edEdad"
         android:layout_width="283dp"
         android:layout_height="58dp"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:hint="Edad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/etname" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/edEnfermedades"
         android:layout_width="283dp"
         android:layout_height="58dp"
         android:layout_marginTop="16dp"
@@ -105,10 +133,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+        app:layout_constraintTop_toBottomOf="@+id/edSangre" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName6"
+        android:id="@+id/edAlergias"
         android:layout_width="283dp"
         android:layout_height="58dp"
         android:layout_marginTop="20dp"
@@ -118,7 +146,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/edEnfermedades" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
