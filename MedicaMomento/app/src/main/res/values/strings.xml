@@ -20,4 +20,6 @@
         <item>Inyecciones</item>
         <item>Capsulas</item>
     </string-array>
+
+    <string name="interstitial_ad_id_live">ca-app-pub-3940256099942544~1033173712</string>
 </resources>

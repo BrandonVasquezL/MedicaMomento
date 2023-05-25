@@ -13,17 +13,32 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.example.medicamomento.databinding.ActivityMainBinding
 import com.example.medicamomento.fragments.Inicio
 import com.example.medicamomento.fragments.Medicamentos
 import com.example.medicamomento.fragments.Perfil
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
+
+
+
+
+    private final var TAG = "MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var adRequest = AdRequest.Builder().build()
+
+        //Inicializar anuncio instersticial
+
 
         //bottomnav
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)

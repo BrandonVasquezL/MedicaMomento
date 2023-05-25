@@ -17,6 +17,10 @@
         android:theme="@style/Theme.NavigationDrawer"
         tools:targetApi="31">
         <activity
+            android:name=".InterstitialActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".AgregarPerfil"
             android:exported="false" />
         <activity
@@ -27,7 +31,7 @@
             android:exported="false" />
         <activity
             android:name=".SelMedicina"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".tutorial"
             android:exported="true">
@@ -45,6 +49,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~1033173712" />
     </application>
 
 </manifest>
