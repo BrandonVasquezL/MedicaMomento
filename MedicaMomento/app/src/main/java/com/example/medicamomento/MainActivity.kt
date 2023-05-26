@@ -13,32 +13,17 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import com.example.medicamomento.databinding.ActivityMainBinding
 import com.example.medicamomento.fragments.Inicio
 import com.example.medicamomento.fragments.Medicamentos
 import com.example.medicamomento.fragments.Perfil
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
-
-
-
-
-    private final var TAG = "MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var adRequest = AdRequest.Builder().build()
-
-        //Inicializar anuncio instersticial
-
 
         //bottomnav
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
@@ -72,15 +57,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             null
         )
         val medicinas = ArrayList<String>()
-            while (cursor.moveToNext()) {
-                val id = cursor.getString(cursor.getColumnIndexOrThrow(BaseColumns._ID))
-                val medicina = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_MEDICAMENTO))
-                val dosis = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_DOSIS))
-                val fecha = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_FECHA))
-                val hora = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_HORARIO))
-                val medicamento = "$id $medicina $dosis $fecha $hora"
-                medicinas.add(medicamento)
-            }
+        while (cursor.moveToNext()) {
+            val id = cursor.getString(cursor.getColumnIndexOrThrow(BaseColumns._ID))
+            val medicina = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_MEDICAMENTO))
+            val dosis = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_DOSIS))
+            val fecha = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_FECHA))
+            val hora = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_HORARIO))
+            val medicamento = "$id $medicina $dosis $fecha $hora"
+            medicinas.add(medicamento)
+        }
 
         val arrayAdapter = ArrayAdapter<String>(
             this,
@@ -104,11 +89,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun makeCurrentFragment(fragment: Fragment) =
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container, fragment)
-            commit()
-        }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

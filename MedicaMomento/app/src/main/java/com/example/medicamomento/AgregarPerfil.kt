@@ -152,8 +152,20 @@ class AgregarPerfil : AppCompatActivity() {
 
         Log.d(TAG, "Google Mobile Ads SDK Version: " + MobileAds.getVersion())
 
-        MobileAds.initialize(this) {status->
-            Log.d(TAG,"onCreate status $status")
+        fun cargar_anuncio(){
+            InterstitialAd.load(this, "ca-app-pub-3940256099942544~1033173712", adRequest, object : InterstitialAdLoadCallback(){
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    mInterstitialAd = interstitialAd
+                }
+                override fun onAdFailedToLoad(p0: LoadAdError) {
+                    mInterstitialAd = null
+                }
+            })
+        }
+
+
+        MobileAds.initialize(this) {
+            cargar_anuncio()
 
         }
 
@@ -190,17 +202,6 @@ class AgregarPerfil : AppCompatActivity() {
 
 
         //Anuncio de admob
-
-        InterstitialAd.load(this, "ca-app-pub-3940256099942544~1033173712", adRequest, object : InterstitialAdLoadCallback(){
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                mInterstitialAd = interstitialAd
-            }
-            override fun onAdFailedToLoad(p0: LoadAdError) {
-                mInterstitialAd = null
-            }
-        })
-
-
 
         btnguardar2.setOnClickListener {
 
