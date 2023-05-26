@@ -71,7 +71,7 @@
         android:layout_height="58dp"
         android:ems="10"
         android:hint="Dosis/cantidad"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.138"

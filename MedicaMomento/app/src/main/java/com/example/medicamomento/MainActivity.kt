@@ -57,15 +57,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             null
         )
         val medicinas = ArrayList<String>()
-            while (cursor.moveToNext()) {
-                val id = cursor.getString(cursor.getColumnIndexOrThrow(BaseColumns._ID))
-                val medicina = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_MEDICAMENTO))
-                val dosis = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_DOSIS))
-                val fecha = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_FECHA))
-                val hora = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_HORARIO))
-                val medicamento = "$id $medicina $dosis $fecha $hora"
-                medicinas.add(medicamento)
-            }
+        while (cursor.moveToNext()) {
+            val id = cursor.getString(cursor.getColumnIndexOrThrow(BaseColumns._ID))
+            val medicina = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_MEDICAMENTO))
+            val dosis = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_DOSIS))
+            val fecha = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_FECHA))
+            val hora = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_HORARIO))
+            val medicamento = "$id $medicina $dosis $fecha $hora"
+            medicinas.add(medicamento)
+        }
 
         val arrayAdapter = ArrayAdapter<String>(
             this,
@@ -87,30 +87,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-
-        //bottom nav
-       /*val inicio = Inicio()
-        val medicamentos = Medicamentos()
-        val perfil = Perfil()
-
-        makeCurrentFragment(inicio)
-        
-
-        bottom_Navigation.setOnNavigationItemSelectedListener{
-            when(it.itemId){
-                R.id.bnInicio -> makeCurrentFragment(inicio)
-                R.id.bnMedicamentos -> makeCurrentFragment(medicamentos)
-                R.id.bnPerfil -> makeCurrentFragment(perfil)
-            }
-            true
-        }*/
     }
 
-    private fun makeCurrentFragment(fragment: Fragment) =
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container, fragment)
-            commit()
-        }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
