@@ -9,12 +9,14 @@ class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
     override fun onCreate(db: SQLiteDatabase ) {
         db.execSQL(SQL_CREATE_MEDICAMENTOS)
         db.execSQL(SQL_CREATE_PROFILE)
+        db.execSQL(SQL_CREATE_COMENTARIO)
     }
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
         db.execSQL(SQL_DELETE_ENTRIES)
-        db.execSQL(SQL_DELETE_PROFILE)
+        db.execSQL(SQL_DELETE_PROFILES)
+        db.execSQL(SQL_DELETE_COMENTARIOS)
         onCreate(db)
     }
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -47,5 +49,13 @@ class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
                 "${Constants.perfil.COLUMN_SERVICIO} TEXT)"
 
 
-    private val SQL_DELETE_PROFILE = "DROP TABLE IF EXISTS ${Constants.perfil.TABLE_NAME}"
+    private val SQL_DELETE_PROFILES = "DROP TABLE IF EXISTS ${Constants.perfil.TABLE_NAME}"
+
+    private  val SQL_CREATE_COMENTARIO =
+        "CREATE TABLE ${Constants.comentarios.TABLE_NAME} (" +
+                "${BaseColumns._ID} INTEGER PRIMARY KEY," +
+                "${Constants.comentarios.COLUMN_COMENT} TEXT)"
+
+
+    private val SQL_DELETE_COMENTARIOS= "DROP TABLE IF EXISTS ${Constants.comentarios.TABLE_NAME}"
 }

@@ -72,8 +72,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val list_med = findViewById<ListView>(R.id.listv_medicinas)
         list_med.adapter = arrayAdapter
 
-        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
 
+        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 

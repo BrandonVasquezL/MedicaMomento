@@ -20,4 +20,8 @@ object Constants {
         const val COLUMN_ALERGIAS = "ALERGIAS"
         const val COLUMN_SERVICIO = "S_MEDICO"
     }
+    object comentarios : BaseColumns {
+        const val TABLE_NAME = "COMENTARIOS"
+        const val COLUMN_COMENT = "COMENTARIO"
+    }
 }

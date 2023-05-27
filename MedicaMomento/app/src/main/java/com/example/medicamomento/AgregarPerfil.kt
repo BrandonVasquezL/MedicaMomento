@@ -203,7 +203,7 @@ class AgregarPerfil : AppCompatActivity() {
                     put(Constants.perfil.COLUMN_SERVICIO, servicio2)
                 }
 
-                db.update(Constants.perfil.TABLE_NAME, values, BaseColumns._ID +"= "+1, null )
+                db.update(Constants.perfil.TABLE_NAME, values, BaseColumns._ID +" <> 0" , null )
 
             }
         }
