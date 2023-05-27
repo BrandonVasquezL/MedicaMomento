@@ -40,6 +40,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:menu="@menu/bottom_nav" />
+
     </LinearLayout>
 
 
@@ -51,10 +58,9 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
         app:itemIconTint="@color/lavender"
-        app:itemTextColor="@color/black">
-    </com.google.android.material.navigation.NavigationView>
+        app:itemTextColor="@color/black"/>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <!--<androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -65,7 +71,7 @@
             android:layout_gravity="bottom"
             app:menu="@menu/bottom_nav" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

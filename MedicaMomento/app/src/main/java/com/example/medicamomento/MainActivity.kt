@@ -12,10 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import com.example.medicamomento.fragments.Inicio
-import com.example.medicamomento.fragments.Medicamentos
-import com.example.medicamomento.fragments.Perfil
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
@@ -27,12 +23,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //bottomnav
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigationView.setSelectedItemId(R.id.bnInicio)
+        bottomNavigationView.selectedItemId = R.id.bnInicio
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.bnInicio -> true
                 R.id.bnMedicamentos -> {
-                    startActivity(Intent(applicationContext, Medicamentos::class.java))
+                    startActivity(Intent(applicationContext, Inicio::class.java))
                     finish()
                     true
                 }
@@ -95,7 +91,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_supervisado -> Toast.makeText(this, "Modo supervisado", Toast.LENGTH_SHORT).show()
             R.id.nav_supervisor -> Toast.makeText(this, "Modo supervisor", Toast.LENGTH_SHORT).show()
             R.id.nav_registro -> Toast.makeText(this, "ver registros", Toast.LENGTH_SHORT).show()
-            R.id.nav_comentario -> Toast.makeText(this, "crear comentario", Toast.LENGTH_SHORT).show()
+            R.id.nav_comentario -> startActivity(Intent(applicationContext, Comentarios::class.java))
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
