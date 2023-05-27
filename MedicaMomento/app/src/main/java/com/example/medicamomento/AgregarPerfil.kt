@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -174,6 +175,7 @@ class AgregarPerfil : AppCompatActivity() {
             enfermedades.isEnabled = true
             alergias.isEnabled = true
             servicio.isEnabled = true
+
             binding.btnGuardar.setOnClickListener {
                 btneditar.isEnabled = true
                 btnguardar2.isEnabled = false
@@ -184,6 +186,25 @@ class AgregarPerfil : AppCompatActivity() {
                 enfermedades.isEnabled = false
                 alergias.isEnabled = false
                 servicio.isEnabled = false
+
+                val name = nombre.text.toString()
+                val edad2 = edad.text.toString()
+                val sangre2 = sangre.text.toString()
+                val enfermedades2 = enfermedades.text.toString()
+                val alergias2 = alergias.text.toString()
+                val servicio2 = servicio.text.toString()
+
+                val values = ContentValues().apply {
+                    put(Constants.perfil.COLUMN_NOMBRE, name)
+                    put(Constants.perfil.COLUMN_EDAD, edad2)
+                    put(Constants.perfil.COLUMN_SANGRE, sangre2)
+                    put(Constants.perfil.COLUMN_ENFERMEDADES, enfermedades2)
+                    put(Constants.perfil.COLUMN_ALERGIAS, alergias2)
+                    put(Constants.perfil.COLUMN_SERVICIO, servicio2)
+                }
+
+                db.update(Constants.perfil.TABLE_NAME, values, BaseColumns._ID +"= "+1, null )
+
             }
         }
 
