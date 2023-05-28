@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.medicamomento.databinding.Fragment4Binding
 
 private var _binding: Fragment4Binding? = null
@@ -25,10 +26,27 @@ class Fragment4 : Fragment() {
         }
         return binding.root
     }
-    private fun cambiarActivity(){
-        val actividad = getActivity()
-        actividad?.finish()
-        val intent = Intent(activity, SelMedicina::class.java)
-        startActivity(intent)
+    private fun cambiarActivity() {
+        val dbHelper = DBhelper(requireContext())
+        val db = dbHelper.writableDatabase
+
+        val consulta = "SELECT Medicamento FROM Mis_Medicamentos"
+        val cursor = db.rawQuery(consulta, null)
+
+        if (cursor.moveToFirst()) {
+            if (cursor.count > 0) {
+                // Si ya hay registros en la base de datos, redirige a MainActivity
+                val intent = Intent(requireActivity(), MainActivity::class.java)
+                startActivity(intent)
+            } else {
+                // Si no hay registros en la base de datos, redirige a SelMedicina
+                val intent = Intent(requireActivity(), SelMedicina::class.java)
+                startActivity(intent)
+            }
+        }
+
+        cursor.close()
+        db.close()
+        dbHelper.close()
     }
 }
