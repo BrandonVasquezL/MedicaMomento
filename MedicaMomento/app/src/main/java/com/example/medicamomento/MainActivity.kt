@@ -100,13 +100,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_supervisado -> Toast.makeText(this, "Modo supervisado", Toast.LENGTH_SHORT).show()
-            R.id.nav_supervisor -> Toast.makeText(this, "Modo supervisor", Toast.LENGTH_SHORT).show()
+            R.id.nav_supervisor -> startActivity(Intent(applicationContext,RegistrarSupervisor::class.java))
             R.id.nav_registro -> Toast.makeText(this, "ver registros", Toast.LENGTH_SHORT).show()
             R.id.nav_comentario -> startActivity(Intent(applicationContext, Comentarios::class.java))
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
+
+
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
