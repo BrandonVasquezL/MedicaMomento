@@ -38,11 +38,11 @@ class Fragment4 : Fragment() {
                 // Si ya hay registros en la base de datos, redirige a MainActivity
                 val intent = Intent(requireActivity(), MainActivity::class.java)
                 startActivity(intent)
-            } else {
-                // Si no hay registros en la base de datos, redirige a SelMedicina
-                val intent = Intent(requireActivity(), SelMedicina::class.java)
-                startActivity(intent)
             }
+        } else {
+            // Si no hay registros en la base de datos, redirige a SelMedicina
+            val intent = Intent(requireActivity(), SelMedicina::class.java)
+            startActivity(intent)
         }
 
         cursor.close()
