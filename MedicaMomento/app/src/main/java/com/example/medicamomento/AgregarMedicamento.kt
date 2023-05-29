@@ -78,7 +78,7 @@ class AgregarMedicamento : AppCompatActivity() {
 
     /*botones*/
     fun CancelarCreacion(view: View){
-        val intent = Intent(this, SelMedicina::class.java).apply {
+        val intent = Intent(this, MainActivity::class.java).apply {
             putExtra(AlarmClock.EXTRA_MESSAGE, "Creacion de medicamento")
         }
         startActivity(intent)
