@@ -55,9 +55,10 @@ class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : Recycler
                 if (position != RecyclerView.NO_POSITION) {
                     val medicamento = medicamentos[position]
                     val idToDelete = medicamento.id // Obtener el ID del medicamento a borrar
+                    val nomMed = medicamento.nombre
                     val deleted = deleteData(itemView.context, idToDelete)
                     if (deleted) {
-                       Toast.makeText(itemView.context, "Borraste $idToDelete", Toast.LENGTH_SHORT).show()
+                       Toast.makeText(itemView.context, "Borraste  el  $nomMed", Toast.LENGTH_SHORT).show()
                         val intent = Intent(itemView.context, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         val context = itemView.context
