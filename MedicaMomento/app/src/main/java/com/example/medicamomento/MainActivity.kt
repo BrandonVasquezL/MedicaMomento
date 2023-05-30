@@ -15,12 +15,18 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import java.util.Calendar.getInstance
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: Adaptador
+    private lateinit var medicamentos: List<DBhelper.Medicamento>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +59,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-        val dbHelper = DBhelper(applicationContext)
+        val database = DBhelper.getInstance(this)
+        medicamentos = database.getMedicamentos()
+
+        // Configurar el RecyclerView y el adaptador
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = Adaptador(medicamentos)
+        recyclerView.adapter = adapter
+
+        /*val dbHelper = DBhelper(applicationContext)
         val db = dbHelper.writableDatabase
         val cursor = db.query(Constants.medicinas.TABLE_NAME,
             null,
@@ -81,7 +96,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
 
         val list_med = findViewById<ListView>(R.id.listv_medicinas)
-        list_med.adapter = arrayAdapter
+        list_med.adapter = arrayAdapter*/
+
 
 
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
