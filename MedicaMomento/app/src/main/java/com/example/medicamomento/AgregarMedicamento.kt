@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.AlarmClock
+import android.provider.BaseColumns
 import android.provider.MediaStore
 import android.view.View
 import android.widget.EditText
@@ -15,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import java.io.ByteArrayOutputStream
 
 
 class AgregarMedicamento : AppCompatActivity() {
@@ -24,13 +26,14 @@ class AgregarMedicamento : AppCompatActivity() {
     private lateinit var et_Fecha: EditText
     private lateinit var et_Hora: EditText
     private lateinit var sp_cant: Spinner
+    private lateinit var imgMed: ImageView
 
     var medicamento: String? = null
     var dosis: String? = null
-    var dosis2: String? = null
     var fecha: String? = null
     var hora: String? = null
     var cant: String? = null
+    var img: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_medicamento)
@@ -41,7 +44,6 @@ class AgregarMedicamento : AppCompatActivity() {
         et_Hora.setOnClickListener { showTimePickerDialog() }
 
         /*cameraPermision = String[]{Manifest.permission.CAMERA, Manifest.Perm}*/
-
         val btnCamara = findViewById<ImageView>(R.id.btnCamara)
         btnCamara.setOnClickListener{
             startForResult.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
@@ -65,16 +67,6 @@ class AgregarMedicamento : AppCompatActivity() {
         et_Fecha.setText("$day/$month/$year")
     }
 
-/*foto*/
-    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        result: ActivityResult ->
-        if(result.resultCode == Activity.RESULT_OK){
-            val intent = result.data
-            val imageBitmapa = intent?.extras?.get("data") as Bitmap
-            val imageView = findViewById<ImageView>(R.id.btnCamara)
-            imageView.setImageBitmap(imageBitmapa)
-        }
-    }
 
     /*botones*/
     fun CancelarCreacion(view: View){
@@ -91,12 +83,21 @@ class AgregarMedicamento : AppCompatActivity() {
         et_Fecha = findViewById(R.id.etxt_fecha)
         et_Hora = findViewById(R.id.etxt_hora)
         sp_cant = findViewById(R.id.spinner)
+        
+
 
 
         medicamento = et_Medicamento.text.toString()
         dosis = et_Dosis.text.toString()
         fecha = et_Fecha.text.toString()
         hora = et_Hora.text.toString()
+
+         /*?: run {
+            // La vista ImageView no se encontró en el diseño
+            // Puedes mostrar un mensaje de error o realizar otra acción
+            Toast.makeText(this, "Agrega una imagen aplastando la camara", Toast.LENGTH_SHORT).show()
+            return false
+        }*/
 
         if (medicamento!!.isEmpty()) {
             et_Medicamento.setError("Campo Vacio")
@@ -114,34 +115,67 @@ class AgregarMedicamento : AppCompatActivity() {
             et_Hora.setError("Campo Vacio")
             retorno = false
         }
+
         return retorno
     }
-    fun GuardarMedicamento(view: View){
-        if(validateMedicamento()){
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra(AlarmClock.EXTRA_MESSAGE, "Creacion de medicamento")
 
+    fun GuardarMedicamento(view: View) {
+        if (validateMedicamento()) {
+            val intent = Intent(this, MainActivity::class.java).apply {
+                putExtra(AlarmClock.EXTRA_MESSAGE, "Creacion de medicamento")
+            }
 
             val dbHelper = DBhelper(applicationContext)
             val db = dbHelper.writableDatabase
             cant = sp_cant.selectedItem.toString()
 
-
-
-
             val values = ContentValues().apply {
                 put(Constants.medicinas.COLUMN_MEDICAMENTO, medicamento)
-                put(Constants.medicinas.COLUMN_DOSIS, dosis + " "+cant)
+                put(Constants.medicinas.COLUMN_DOSIS, dosis + " " + cant)
                 put(Constants.medicinas.COLUMN_FECHA, fecha)
                 put(Constants.medicinas.COLUMN_HORARIO, hora)
             }
+
             val newRowId = db.insert(Constants.medicinas.TABLE_NAME, null, values)
             val idc = newRowId.toString()
 
-            Toast.makeText(applicationContext,idc,Toast.LENGTH_SHORT).show()
-        }
+            if (imageBitmapa != null) {
+                val imageByteArray = convertBitmapToByteArray(imageBitmapa!!)
+                val contentValues = ContentValues().apply {
+                    put(Constants.medicinas.COLUMN_IMAGEN, imageByteArray)
+                }
+                db.update(
+                    Constants.medicinas.TABLE_NAME,
+                    contentValues,
+                    "${BaseColumns._ID} = ?",
+                    arrayOf(idc)
+                )
+            }
 
-        startActivity(intent)
+            db.close()
+
+            Toast.makeText(applicationContext, idc, Toast.LENGTH_SHORT).show()
+
+            startActivity(intent)
         }
+    }
+
+    private var imageBitmapa: Bitmap? = null
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent = result.data
+            val imageBitmapa = intent?.extras?.get("data") as Bitmap?
+            val imageView = findViewById<ImageView>(R.id.btnCamara)
+            imageView.setImageBitmap(imageBitmapa)
+            if (imageBitmapa != null) {
+                this.imageBitmapa = imageBitmapa
+            }
+        }
+    }
+
+    private fun convertBitmapToByteArray(bitmap: Bitmap): ByteArray {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        return stream.toByteArray()
     }
 }

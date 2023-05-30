@@ -3,6 +3,7 @@ package com.example.medicamomento
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.provider.BaseColumns
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,8 @@ class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : Recycler
         private val txtNombre: TextView = itemView.findViewById(R.id.txt_name)
         private val txtDosis: TextView = itemView.findViewById(R.id.txt_dosis)
         private val txtHorario: TextView = itemView.findViewById(R.id.txt_time)
+        private val imgmed: ImageView = itemView.findViewById(R.id.imgMedicamento)
+
         val btnBorrar: ImageView = itemView.findViewById(R.id.btnDelete)
 
         init {
@@ -77,10 +80,11 @@ class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : Recycler
 
 
         fun bind(medicamento: DBhelper.Medicamento) {
+            val bitmap = BitmapFactory.decodeByteArray(medicamento.imagen, 0, medicamento.imagen.size)
+            imgmed.setImageBitmap(bitmap)
             txtNombre.text = medicamento.nombre
             txtDosis.text = "Tomar: " + medicamento.dosis
             txtHorario.text = "Tomar cada: " + medicamento.horario
-
         }
     }
 

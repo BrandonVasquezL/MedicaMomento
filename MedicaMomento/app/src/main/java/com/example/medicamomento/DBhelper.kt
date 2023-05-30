@@ -4,7 +4,6 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 
 class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase ) {
@@ -47,7 +46,8 @@ class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
                 "${Constants.medicinas.COLUMN_MEDICAMENTO} TEXT," +
                 "${Constants.medicinas.COLUMN_DOSIS} TEXT," +
                 "${Constants.medicinas.COLUMN_FECHA} DATE," +
-                "${Constants.medicinas.COLUMN_HORARIO} TIME)"
+                "${Constants.medicinas.COLUMN_HORARIO} TIME," +
+                "${Constants.medicinas.COLUMN_IMAGEN} BLOB)"
 
 
     private val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${Constants.medicinas.TABLE_NAME}"
@@ -77,7 +77,9 @@ class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         val id: Int,
         val nombre: String,
         val dosis: String,
-        val horario: String
+        val horario: String,
+        val fecha: String,
+        val imagen: ByteArray
     )
     fun getMedicamentos(): List<Medicamento> {
         val db = this.readableDatabase
@@ -85,7 +87,9 @@ class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
             BaseColumns._ID,
             Constants.medicinas.COLUMN_MEDICAMENTO,
             Constants.medicinas.COLUMN_DOSIS,
-            Constants.medicinas.COLUMN_HORARIO
+            Constants.medicinas.COLUMN_HORARIO,
+            Constants.medicinas.COLUMN_FECHA,
+            Constants.medicinas.COLUMN_IMAGEN
         )
         val cursor = db.query(
             Constants.medicinas.TABLE_NAME,
@@ -103,7 +107,9 @@ class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
                 val nombre = getString(getColumnIndexOrThrow(Constants.medicinas.COLUMN_MEDICAMENTO))
                 val dosis = getString(getColumnIndexOrThrow(Constants.medicinas.COLUMN_DOSIS))
                 val horario = getString(getColumnIndexOrThrow(Constants.medicinas.COLUMN_HORARIO))
-                medicamentos.add(Medicamento(id, nombre, dosis, horario))
+                val fecha = getString(getColumnIndexOrThrow(Constants.medicinas.COLUMN_FECHA))
+                val imagen = getBlob(getColumnIndexOrThrow(Constants.medicinas.COLUMN_IMAGEN))
+                medicamentos.add(Medicamento(id, nombre, dosis, horario, fecha, imagen))
             }
         }
         cursor.close()

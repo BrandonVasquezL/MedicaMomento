@@ -10,6 +10,7 @@ object Constants {
         const val COLUMN_DOSIS = "Dosis"
         const val COLUMN_FECHA = "Finalizacion"
         const val COLUMN_HORARIO = "HORAS"
+        const val COLUMN_IMAGEN = "imagen"
     }
     object perfil : BaseColumns {
         const val TABLE_NAME = "PERFIL"
