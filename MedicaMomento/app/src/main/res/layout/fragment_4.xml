@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".Fragment4">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageView5"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/tut_4"
+        android:scaleType="fitCenter"
+        android:padding="16dp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1. Visualiza el progreso de tu tratamiento"
+        android:textColor="@color/black"
+        android:textSize="19sp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp" />
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="309dp"
-                android:layout_height="340dp"
-                android:src="@drawable/tut_4" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="23dp" />
+    <Button
+        android:id="@+id/startButton"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boton_redondo"
+        android:text="Comenzar" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="322dp"
-                android:layout_height="159dp"
-                android:text="1. Visualiza el progreso de tu tratamiento"
-                android:textColor="@color/black"
-                android:textSize="19sp" />
-            <Button
-                android:id="@+id/startButton"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boton_redondo"
-                android:text="Comenzar" />
-        </LinearLayout>
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>
