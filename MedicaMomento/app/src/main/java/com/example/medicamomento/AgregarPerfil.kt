@@ -203,7 +203,6 @@ class AgregarPerfil : AppCompatActivity() {
         }
         binding.btnGuardar.setOnClickListener { btneditar.isEnabled = true
 
-
             val sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
             val perfilId = sharedPreferences.getInt("perfil_id", 0)
             val perfilNombre = nombre.text.toString()
@@ -212,11 +211,8 @@ class AgregarPerfil : AppCompatActivity() {
             val perfilEnfermedades = enfermedades.text.toString()
             val perfilAlergias = alergias.text.toString()
             val perfilServicio = servicio.text.toString()
-            val name = nombre.text.toString()
-            val edadText = edad.text.toString()
-            val sangre2 = sangre.text.toString()
-
-            if (name.isNotEmpty() && edadText.isNotEmpty() && sangre2.isNotEmpty()) {
+            val edadString = edad.text.toString()
+            if (perfilNombre.isNotEmpty() && edadString.isNotEmpty() && perfilSangre.isNotEmpty()) {
             // Actualiza los datos del perfil en SharedPreferences
             val perfilActualizado = DBhelper.Perfil(
                 perfilId,

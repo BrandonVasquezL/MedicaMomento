@@ -57,7 +57,7 @@ class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         "CREATE TABLE ${Constants.perfil.TABLE_NAME} (" +
                 "${BaseColumns._ID} INTEGER PRIMARY KEY," +
                 "${Constants.perfil.COLUMN_NOMBRE} TEXT," +
-                "${Constants.perfil.COLUMN_EDAD} TEXT," +
+                "${Constants.perfil.COLUMN_EDAD} INT," +
                 "${Constants.perfil.COLUMN_SANGRE} TEXT," +
                 "${Constants.perfil.COLUMN_ENFERMEDADES} TEXT," +
                 "${Constants.perfil.COLUMN_ALERGIAS} TEXT," +
@@ -179,5 +179,4 @@ class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         db.update(Constants.perfil.TABLE_NAME, values, selection, selectionArgs)
     }
 
-    // Resto de tu código...
 }
