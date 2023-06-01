@@ -1,5 +1,6 @@
 package com.example.medicamomento
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -115,4 +116,68 @@ class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         cursor.close()
         return medicamentos
     }
+
+    data class Perfil(
+        val id: Int,
+        val nombre: String,
+        val edad: Int,
+        val sangre: String,
+        val enfermedades: String,
+        val alergias: String,
+        val servicio: String
+    )
+    fun getPerfil(): MutableList<Perfil> {
+        val db = this.readableDatabase
+        val projection = arrayOf(
+        BaseColumns._ID,
+        Constants.perfil.COLUMN_NOMBRE,
+        Constants.perfil.COLUMN_EDAD,
+        Constants.perfil.COLUMN_SANGRE,
+        Constants.perfil.COLUMN_ENFERMEDADES,
+        Constants.perfil.COLUMN_ALERGIAS,
+        Constants.perfil.COLUMN_SERVICIO
+        )
+        val cursor = db.query(
+            Constants.perfil.TABLE_NAME,
+            projection,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+        val usuario = mutableListOf<Perfil>()
+        with(cursor) {
+            while (moveToNext()) {
+                val id = getInt(getColumnIndexOrThrow(BaseColumns._ID))
+                val nombre = getString(getColumnIndexOrThrow(Constants.perfil.COLUMN_NOMBRE))
+                val edad = getInt(getColumnIndexOrThrow(Constants.perfil.COLUMN_EDAD))
+                val sangre = getString(getColumnIndexOrThrow(Constants.perfil.COLUMN_SANGRE))
+                val enfermedades = getString(getColumnIndexOrThrow(Constants.perfil.COLUMN_ENFERMEDADES))
+                val alergias = getString(getColumnIndexOrThrow(Constants.perfil.COLUMN_ALERGIAS))
+                val servicio = getString(getColumnIndexOrThrow(Constants.perfil.COLUMN_SERVICIO))
+                usuario.add(Perfil(id, nombre, edad, sangre, enfermedades, alergias, servicio))
+            }
+        }
+        cursor.close()
+        return usuario
+    }
+    fun actualizarPerfil(perfil: Perfil) {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(Constants.perfil.COLUMN_NOMBRE, perfil.nombre)
+            put(Constants.perfil.COLUMN_EDAD, perfil.edad)
+            put(Constants.perfil.COLUMN_SANGRE, perfil.sangre)
+            put(Constants.perfil.COLUMN_ENFERMEDADES, perfil.enfermedades)
+            put(Constants.perfil.COLUMN_ALERGIAS, perfil.alergias)
+            put(Constants.perfil.COLUMN_SERVICIO, perfil.servicio)
+        }
+
+        val selection = "${BaseColumns._ID} = ?"
+        val selectionArgs = arrayOf(perfil.id.toString())
+
+        db.update(Constants.perfil.TABLE_NAME, values, selection, selectionArgs)
+    }
+
+    // Resto de tu código...
 }
