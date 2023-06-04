@@ -1,5 +1,8 @@
 package com.example.medicamomento
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -20,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import java.util.Calendar
 import java.util.Calendar.getInstance
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -68,35 +72,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         adapter = Adaptador(medicamentos)
         recyclerView.adapter = adapter
 
-        /*val dbHelper = DBhelper(applicationContext)
-        val db = dbHelper.writableDatabase
-        val cursor = db.query(Constants.medicinas.TABLE_NAME,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        )
-        val medicinas = ArrayList<String>()
-        while (cursor.moveToNext()) {
-            val id = cursor.getString(cursor.getColumnIndexOrThrow(BaseColumns._ID))
-            val medicina = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_MEDICAMENTO))
-            val dosis = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_DOSIS))
-            val fecha = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_FECHA))
-            val hora = cursor.getString(cursor.getColumnIndexOrThrow(Constants.medicinas.COLUMN_HORARIO))
-            val medicamento = "$id $medicina $dosis $fecha $hora"
-            medicinas.add(medicamento)
-        }
 
-        val arrayAdapter = ArrayAdapter<String>(
-            this,
-            android.R.layout.simple_list_item_1,
-            medicinas
-        )
-
-        val list_med = findViewById<ListView>(R.id.listv_medicinas)
-        list_med.adapter = arrayAdapter*/
 
 
 

@@ -9,12 +9,10 @@ import android.provider.AlarmClock
 import android.provider.BaseColumns
 import android.provider.MediaStore
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import java.io.ByteArrayOutputStream
@@ -54,7 +52,7 @@ class AgregarMedicamento : AppCompatActivity() {
         timePicker.show(supportFragmentManager, "time")
     }
     private fun onTimeSelected(time:String){
-        et_Hora.setText("$time")
+        et_Hora.setText(time)
     }
 
     //Calendario
@@ -82,7 +80,6 @@ class AgregarMedicamento : AppCompatActivity() {
         et_Fecha = findViewById(R.id.etxt_fecha)
         et_Hora = findViewById(R.id.etxt_hora)
         sp_cant = findViewById(R.id.spinner)
-        val img:ImageView = findViewById(R.id.btnCamara)
 
         medicamento = et_Medicamento.text.toString()
         dosis = et_Dosis.text.toString()
