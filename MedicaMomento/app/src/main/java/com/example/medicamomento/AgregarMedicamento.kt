@@ -9,6 +9,7 @@ import android.provider.AlarmClock
 import android.provider.BaseColumns
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
@@ -26,14 +27,12 @@ class AgregarMedicamento : AppCompatActivity() {
     private lateinit var et_Fecha: EditText
     private lateinit var et_Hora: EditText
     private lateinit var sp_cant: Spinner
-    private lateinit var imgMed: ImageView
 
     var medicamento: String? = null
     var dosis: String? = null
     var fecha: String? = null
     var hora: String? = null
     var cant: String? = null
-    var img: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_medicamento)
@@ -83,21 +82,13 @@ class AgregarMedicamento : AppCompatActivity() {
         et_Fecha = findViewById(R.id.etxt_fecha)
         et_Hora = findViewById(R.id.etxt_hora)
         sp_cant = findViewById(R.id.spinner)
-        
-
-
+        val img:ImageView = findViewById(R.id.btnCamara)
 
         medicamento = et_Medicamento.text.toString()
         dosis = et_Dosis.text.toString()
         fecha = et_Fecha.text.toString()
         hora = et_Hora.text.toString()
 
-         /*?: run {
-            // La vista ImageView no se encontró en el diseño
-            // Puedes mostrar un mensaje de error o realizar otra acción
-            Toast.makeText(this, "Agrega una imagen aplastando la camara", Toast.LENGTH_SHORT).show()
-            return false
-        }*/
 
         if (medicamento!!.isEmpty()) {
             et_Medicamento.setError("Campo Vacio")
@@ -113,6 +104,10 @@ class AgregarMedicamento : AppCompatActivity() {
         }
         if (hora!!.isEmpty()) {
             et_Hora.setError("Campo Vacio")
+            retorno = false
+        }
+        if (imageBitmapa == null) {
+            Toast.makeText(this, "Agrega una imagen", Toast.LENGTH_SHORT).show()
             retorno = false
         }
 
