@@ -82,6 +82,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val suspender: Button = findViewById(R.id.btnSuspender)
         val editar: Button = findViewById(R.id.btnEditar)
         editar.isEnabled = false
+        suspender.isEnabled= false
+
 
         editar.setOnClickListener {
             // Actualizar la posición seleccionada en el adaptador
