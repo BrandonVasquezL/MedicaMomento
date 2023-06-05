@@ -1,19 +1,15 @@
 package com.example.medicamomento
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
+
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.BaseColumns
 import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
-import android.widget.ArrayAdapter
+import android.view.View
 import android.widget.Button
-import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -23,18 +19,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import java.util.Calendar
-import java.util.Calendar.getInstance
-
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView2: RecyclerView
     private lateinit var adapter: Adaptador
+    private lateinit var adaptador2: Adaptador2
+    private var isSecondRecyclerViewVisible = false
     private lateinit var medicamentos: List<DBhelper.Medicamento>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
         //boton agregar medicamentos
         val btnMasmedic : FloatingActionButton = findViewById(R.id.btnMedicamento)
@@ -72,11 +70,53 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         adapter = Adaptador(medicamentos)
         recyclerView.adapter = adapter
 
+        recyclerView2 = findViewById(R.id.recyclerView2)
+        recyclerView2.visibility = View.VISIBLE
+        recyclerView2.layoutManager = LinearLayoutManager(this)
+        adaptador2 = Adaptador2(medicamentos)
+        recyclerView2.adapter = adaptador2
 
 
 
 
-        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+        val suspender: Button = findViewById(R.id.btnSuspender)
+        val editar: Button = findViewById(R.id.btnEditar)
+        editar.isEnabled = false
+
+        editar.setOnClickListener {
+            // Actualizar la posición seleccionada en el adaptador
+            val selectedItemPosition = adapter.getSelectedPosition()
+            adapter.updateSelectedPosition(selectedItemPosition)
+
+            if (selectedItemPosition != RecyclerView.NO_POSITION) {
+                val medicamento = adapter.getMedicamentoAtPosition(selectedItemPosition)
+
+                medicamento?.let {
+                    val intent = Intent(this, EditarMedicina::class.java)
+                    intent.putExtra("id", it.id)
+                    intent.putExtra("medicamento", it.nombre)
+                    intent.putExtra("dosis", it.dosis)
+                    intent.putExtra("fecha", it.fecha)
+                    intent.putExtra("hora", it.horario)
+                    // Agrega los demás datos del medicamento que desees editar
+                    startActivity(intent)
+                }
+            } else {
+                Toast.makeText(this, "Selecciona un medicamento", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        if (adapter.itemCount > 0) {
+            editar.isEnabled = true
+            suspender.isEnabled = true
+        }
+
+
+
+
+
+
+        drawerLayout = findViewById(R.id.drawer_layout)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -109,4 +149,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             onBackPressedDispatcher.onBackPressed()
         }
     }
+
 }

@@ -14,7 +14,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : RecyclerView.Adapter<Adaptador.ViewHolder>() {
+class Adaptador2(private val medicamentos: List<DBhelper.Medicamento>) : RecyclerView.Adapter<Adaptador2.ViewHolder>() {
 
     private var selectedPosition = RecyclerView.NO_POSITION
 
@@ -27,7 +27,7 @@ class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : Recycler
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.medicinaitem, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.medicinaitem2, parent, false)
         return ViewHolder(view)
     }
 
@@ -35,11 +35,9 @@ class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : Recycler
         val medicamento = medicamentos[position]
         holder.bind(medicamento)
         holder.itemView.isActivated = position == selectedPosition
-
         holder.itemView.setOnClickListener {
             selectedPosition = holder.adapterPosition
             notifyDataSetChanged()
-            updateSelectedPosition(position)
         }
     }
     fun deleteData(context: Context, id: Int): Boolean {
@@ -83,7 +81,7 @@ class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : Recycler
                     val nomMed = medicamento.nombre
                     val deleted = deleteData(itemView.context, idToDelete)
                     if (deleted) {
-                       Toast.makeText(itemView.context, "Borraste  el  $nomMed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(itemView.context, "Borraste  el  $nomMed", Toast.LENGTH_SHORT).show()
                         val intent = Intent(itemView.context, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         val context = itemView.context

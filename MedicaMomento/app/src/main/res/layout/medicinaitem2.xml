@@ -1,0 +1,86 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:alpha=".6"> <!-- Fondo opaco para el LinearLayout -->
+
+        <ImageView
+            android:id="@+id/imgMedicamento"
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_foreground"
+            android:alpha="0.3" /> <!-- Opacidad para la ImageView -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/txt_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Medicamento"
+                    android:textColor="@color/black"
+                    android:textSize="23sp"
+                    android:alpha="0.8" /> <!-- Opacidad para el TextView -->
+
+                <ImageView
+                    android:id="@+id/btnDelete"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_delete"
+                    android:alpha="0.8" /> <!-- Opacidad para la ImageView -->
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_dosis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Tomar: "
+                android:textSize="20sp"
+                android:alpha="0.8" /> <!-- Opacidad para el TextView -->
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Tomar cada: "
+                android:textColor="#2EBB0F"
+                android:textSize="20sp"
+                android:alpha="0.8" /> <!-- Opacidad para el TextView -->
+
+            <Button
+                android:id="@+id/btnRetomar"
+                android:layout_width="138dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Retomar"
+                android:background="@drawable/boton_redondo"
+                android:alpha="0.8" /> <!-- Opacidad para el Button -->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

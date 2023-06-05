@@ -28,7 +28,7 @@
         android:layout_height="105dp"
         android:layout_marginTop="100dp"
         android:ems="10"
-        android:hint="Agrega un comentario"
+        android:hint="Guarda tus sintomas aquí"
         android:inputType="textPersonName"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
