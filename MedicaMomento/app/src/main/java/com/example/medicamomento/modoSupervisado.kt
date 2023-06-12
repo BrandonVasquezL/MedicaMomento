@@ -5,34 +5,28 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.hardware.biometrics.BiometricPrompt
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class modoSupervisado : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: Adaptador
     private lateinit var medicamentos: List<DBhelper.Medicamento>
-
-
-
 
 
 
@@ -53,9 +47,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 override  fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?){
                     super.onAuthenticationSucceeded(result)
                     notificarUsuario("Autenticacion completada")
-                    //Despues de autenticar, debe mostrar la activity de supervisado
-
-
+                    (Intent(this@modoSupervisado,MainActivity::class.java))
+                    finish()
 
 
 
@@ -77,8 +70,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .setDescription("Para cambiar al modo supervisor, coloque su dedo en el lector")
             .setNegativeButton("Cancelar",this.mainExecutor,
                 DialogInterface.OnClickListener{ dialog, which->
-                notificarUsuario("Autenticacion cancelada")
-            }).build()
+                    notificarUsuario("Autenticacion cancelada")
+                }).build()
 
         biometricPrompt.authenticate(getCancellationSignal(),mainExecutor,authenticationCallback)
 
@@ -120,16 +113,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        setContentView(R.layout.activity_supervisado)
+/*
         //boton agregar medicamentos
         val btnMasmedic : FloatingActionButton = findViewById(R.id.btnMedicamento)
         btnMasmedic.imageTintList = ColorStateList.valueOf(Color.WHITE)
         btnMasmedic.setOnClickListener {
             startActivity(Intent(applicationContext, AgregarMedicamento::class.java))
         }
+
+  */
+
+
+        //corregir para que se muestre unicamente las vistas de supervisado
         //bottomnav
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation2)
         bottomNavigationView.selectedItemId = R.id.bnInicio
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -163,10 +161,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar2)
         setSupportActionBar(toolbar)
 
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        val navigationView = findViewById<NavigationView>(R.id.nav_view2)
         navigationView.setNavigationItemSelectedListener(this)
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav)
         drawerLayout.addDrawerListener(toggle)
@@ -174,18 +174,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
- fun ocultarAgregarBtn(bnMasMedicamento: AgregarMedicamento){
-    bnMasMedicamento.setVisible(false)
-}
-
-
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_supervisado ->
-
-                startActivity(Intent(applicationContext,modoSupervisado::class.java))
+            R.id.nav_supervisado -> Toast.makeText(this, "Modo supervisado", Toast.LENGTH_SHORT).show()
             R.id.nav_supervisor ->
                 autenticarSupervisor()
 

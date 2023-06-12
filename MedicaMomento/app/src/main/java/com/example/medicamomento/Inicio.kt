@@ -25,7 +25,7 @@ class Inicio : AppCompatActivity() {
 
         configChartView()
 
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation2)
         bottomNavigationView.selectedItemId = R.id.bnMedicamentos
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {

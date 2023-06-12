@@ -20,5 +20,5 @@
         android:id="@+id/txtModoSupervisor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Modo Supervisor" />
+        android:text="Modo Supervisado" />
 </LinearLayout>

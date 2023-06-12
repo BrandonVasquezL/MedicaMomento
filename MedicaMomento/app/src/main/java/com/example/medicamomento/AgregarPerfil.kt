@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.BaseColumns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -252,7 +251,7 @@ class AgregarPerfil : AppCompatActivity() {
         }
 
         //bottomnav
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation2)
         bottomNavigationView.selectedItemId = R.id.bnPerfil
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
