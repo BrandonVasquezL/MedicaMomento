@@ -192,13 +192,6 @@ class AgregarPerfil : AppCompatActivity() {
             val perfilAlergias = sharedPreferences.getString("perfil_alergias", "")
             val perfilServicio = sharedPreferences.getString("perfil_servicio", "")
 
-            // Establece los datos del perfil en los campos de texto
-            nombre.setText(perfilNombre)
-            edad.setText(perfilEdad.toString())
-            sangre.setText(perfilSangre)
-            enfermedades.setText(perfilEnfermedades)
-            alergias.setText(perfilAlergias)
-            servicio.setText(perfilServicio)
         }
         binding.btnGuardar.setOnClickListener { btneditar.isEnabled = true
 

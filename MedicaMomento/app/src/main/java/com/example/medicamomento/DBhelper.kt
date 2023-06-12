@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
+import java.io.Serializable
 
 class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase ) {
@@ -81,7 +82,7 @@ class DBhelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         val horario: String,
         val fecha: String,
         val imagen: ByteArray
-    )
+    ): Serializable
     fun getMedicamentos(): List<Medicamento> {
         val db = this.readableDatabase
         val projection = arrayOf(

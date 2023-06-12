@@ -16,6 +16,15 @@ import androidx.recyclerview.widget.RecyclerView
 
 class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : RecyclerView.Adapter<Adaptador.ViewHolder>() {
 
+    private var selectedPosition = RecyclerView.NO_POSITION
+
+    fun updateSelectedPosition(position: Int) {
+        selectedPosition = position
+        notifyDataSetChanged()
+    }
+    fun getSelectedPosition(): Int {
+        return selectedPosition
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.medicinaitem, parent, false)
@@ -25,6 +34,13 @@ class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : Recycler
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val medicamento = medicamentos[position]
         holder.bind(medicamento)
+        holder.itemView.isActivated = position == selectedPosition
+
+        holder.itemView.setOnClickListener {
+            selectedPosition = holder.adapterPosition
+            notifyDataSetChanged()
+            updateSelectedPosition(position)
+        }
     }
     fun deleteData(context: Context, id: Int): Boolean {
         val database = DBhelper.getInstance(context)
@@ -42,6 +58,12 @@ class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : Recycler
 
     override fun getItemCount(): Int {
         return medicamentos.size
+    }
+    fun getMedicamentoAtPosition(position: Int): DBhelper.Medicamento? {
+        if (position != RecyclerView.NO_POSITION) {
+            return medicamentos[position]
+        }
+        return null
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -61,7 +83,7 @@ class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : Recycler
                     val nomMed = medicamento.nombre
                     val deleted = deleteData(itemView.context, idToDelete)
                     if (deleted) {
-                       Toast.makeText(itemView.context, "Borraste  el  $nomMed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(itemView.context, "Borraste  el  $nomMed", Toast.LENGTH_SHORT).show()
                         val intent = Intent(itemView.context, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         val context = itemView.context
@@ -86,6 +108,8 @@ class Adaptador(private val medicamentos: List<DBhelper.Medicamento>) : Recycler
             txtDosis.text = "Tomar: " + medicamento.dosis
             txtHorario.text = "Tomar cada: " + medicamento.horario
         }
+
+
     }
 
 }

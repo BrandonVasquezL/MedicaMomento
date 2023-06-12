@@ -24,7 +24,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1. Agrega tus datos medicos \n2. Puedes editarlos en cualquier momento"
+        android:text="1. En este apartado podras ver el listado de tus medicamentos"
         android:textColor="@color/black"
         android:textSize="19sp"
         android:paddingStart="16dp"
