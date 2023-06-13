@@ -1,12 +1,12 @@
 package com.example.medicamomento
 
-<<<<<<< HEAD
+
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.DialogInterface
-=======
 
->>>>>>> 20e129659431f39c0cc3ab106461a100529383b3
+
+
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
@@ -17,11 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
-<<<<<<< HEAD
-=======
 import android.view.View
 import android.widget.Button
->>>>>>> 20e129659431f39c0cc3ab106461a100529383b3
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -33,10 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-<<<<<<< HEAD
 
-=======
->>>>>>> 20e129659431f39c0cc3ab106461a100529383b3
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var recyclerView: RecyclerView

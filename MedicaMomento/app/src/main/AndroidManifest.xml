@@ -23,20 +23,15 @@
         android:theme="@style/Theme.NavigationDrawer"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
+
             android:name=".modoSupervisado"
-            android:theme="@style/Theme.MainActivity"
-=======
+            android:theme="@style/Theme.MainActivity"/>
+
+        <activity
             android:name=".EditarMedicina"
             android:label="Editar Medicina"
             android:exported="false" />
-        <activity
-            android:name=".LoginSupervisor"
-            android:exported="false" />
-        <activity
-            android:name=".RegistrarSupervisor"
->>>>>>> 20e129659431f39c0cc3ab106461a100529383b3
-            android:exported="false" />
+
         <activity
             android:name=".Inicio"
             android:exported="false" />
