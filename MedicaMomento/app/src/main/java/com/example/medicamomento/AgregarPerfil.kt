@@ -19,7 +19,10 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AgregarPerfil : AppCompatActivity() {
-    private lateinit var binding: ActivityAgregarPerfilBinding
+    lateinit var btnguardar:Button
+    lateinit var btnguardar2:Button
+    lateinit var btneditar:Button
+    public lateinit var binding: ActivityAgregarPerfilBinding
     private var interstitial: InterstitialAd? = null
     private var count = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,9 +38,9 @@ class AgregarPerfil : AppCompatActivity() {
         val enfermedades:EditText = findViewById(R.id.edEnfermedades)
         val alergias:EditText = findViewById(R.id.edAlergias)
         val servicio:EditText = findViewById(R.id.edServicio)
-        val btnguardar:Button = findViewById(R.id.agregarP)
-        val btnguardar2:Button = findViewById(R.id.btnGuardar)
-        val btneditar:Button = findViewById(R.id.btnEditar)
+        btnguardar = findViewById(R.id.agregarP)
+        btnguardar2 = findViewById(R.id.btnGuardar)
+        btneditar = findViewById(R.id.btnEditar)
         var resultado: String? = null
         val dbHelper = DBhelper(applicationContext)
         val db = dbHelper.writableDatabase
@@ -264,6 +267,15 @@ class AgregarPerfil : AppCompatActivity() {
             }
         }
     }
+
+
+    //Metodo para ocultar botones y que seara llamado cuando se seleccione supervisado
+    fun ocultarBotones(){
+        btnguardar.visibility= View.GONE
+        btnguardar2.visibility= View.GONE
+        btneditar.visibility= View.GONE
+    }
+
     private fun guardarPerfilEnSharedPreferences(perfil: DBhelper.Perfil) {
         val sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -317,4 +329,6 @@ class AgregarPerfil : AppCompatActivity() {
     private fun showAds(){
         interstitial?.show(this)
     }
+
+
 }

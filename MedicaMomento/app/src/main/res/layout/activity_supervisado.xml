@@ -45,7 +45,7 @@
             android:layout_gravity="bottom"
             app:itemIconTint="@color/lavender"
             app:itemTextColor="@color/black"
-            app:menu="@menu/bottom_nav2" />
+           />
 
     </LinearLayout>
 
@@ -54,9 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header2"
         app:itemIconTint="@color/lavender"
-        app:itemTextColor="@color/black"
-        app:menu="@menu/nav_menu2" />
+        app:itemTextColor="@color/black" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
