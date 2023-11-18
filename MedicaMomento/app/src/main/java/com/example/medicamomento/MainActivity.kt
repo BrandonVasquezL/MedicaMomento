@@ -1,6 +1,7 @@
 package com.example.medicamomento
 
 
+import android.app.Activity
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.DialogInterface
@@ -15,6 +16,11 @@ import android.hardware.biometrics.BiometricPrompt
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.speech.RecognizerIntent
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
@@ -30,8 +36,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import java.util.Locale
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, TextToSpeech.OnInitListener {
+    // ... (resto de tu código) {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerView2: RecyclerView
@@ -39,6 +47,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var adaptador2: Adaptador2
     private var isSecondRecyclerViewVisible = false
     private lateinit var medicamentos: List<DBhelper.Medicamento>
+    private lateinit var textToSpeech: TextToSpeech
 
 
 
@@ -125,20 +134,93 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     //
+    private var isVoiceInstructionsCompleted = false
+    private var voiceInstructionsPlayed = false
+    private var isTTSInitialized = false
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val result = textToSpeech.setLanguage(Locale.getDefault())
 
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TextToSpeech", "Language not supported")
+            }else{
+                isVoiceInstructionsCompleted = true
+                isTTSInitialized=true
+            }
+        } else {
+            Log.e("TextToSpeech", "Initialization failed")
+        }
+    }
+    private fun initializeTextToSpeech() {
+        if (!isTTSInitialized) {
+            textToSpeech = TextToSpeech(this, this)
+        }
+    }
+    private fun startSpeechRecognition() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora...")
+        startActivityForResult(intent, 1)
+    }
+    private fun speakAndThenRecognize() {
+        if (!voiceInstructionsPlayed) {
+            val instructions = "Di 'agregar medicamento' para añadir uno"
 
+            // Reproducir las instrucciones en voz
+            textToSpeech.speak(instructions, TextToSpeech.QUEUE_FLUSH, null, null)
+
+            // Marcar las instrucciones de voz como reproducidas
+            voiceInstructionsPlayed = true
+        }
+
+        // Iniciar temporizador para esperar antes de iniciar el reconocimiento de voz
+        Handler().postDelayed({
+            // Verificar si las instrucciones de voz se han completado
+            if (isVoiceInstructionsCompleted) {
+                // Iniciar el reconocimiento de voz después del temporizador
+                startSpeechRecognition()
+            }
+            voiceInstructionsPlayed=false
+        }, 3000) // Espera 3 segundos, ajusta según sea necesario
+    }
+
+    // Este método se llama cuando el reconocimiento de voz se completa
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val spokenText = results?.get(0)
+
+            // Verificar si la frase reconocida es "agregar medicamento"
+            if (spokenText?.toLowerCase(Locale.getDefault()) == "agregar medicamento") {
+                // Si la frase coincide, iniciar la actividad AgregarMedicamento
+                startActivity(Intent(applicationContext, AgregarMedicamento::class.java))
+            } else {
+                // Aquí puedes manejar otras frases reconocidas o mostrar un mensaje de error
+                // Por ejemplo, mostrar un Toast indicando que la frase no fue reconocida
+                Toast.makeText(this, "Frase no reconocida", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        //Inicializar instruccion de voz
+        initializeTextToSpeech()
 
 
         //boton agregar medicamentos
         val btnMasmedic : FloatingActionButton = findViewById(R.id.btnMedicamento)
         btnMasmedic.imageTintList = ColorStateList.valueOf(Color.WHITE)
-        btnMasmedic.setOnClickListener {
+        /*btnMasmedic.setOnClickListener {
             startActivity(Intent(applicationContext, AgregarMedicamento::class.java))
         }
+         */
+        btnMasmedic.setOnClickListener{
+            speakAndThenRecognize()
+        }
+
         //bottomnav
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.selectedItemId = R.id.bnInicio

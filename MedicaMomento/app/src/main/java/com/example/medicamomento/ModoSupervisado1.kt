@@ -188,7 +188,6 @@ class ModoSupervisado1 : AppCompatActivity(), NavigationView.OnNavigationItemSel
         when (item.itemId) {
             R.id.nav_supervisado -> {
                 agregarPerfil.ocultarBotones()
-                mainActivity.ocultarBotones()
             }
             R.id.nav_supervisor ->
                 autenticarSupervisor()
