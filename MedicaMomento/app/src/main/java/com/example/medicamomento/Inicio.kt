@@ -21,10 +21,6 @@ class Inicio : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio)
 
-        chart = findViewById(R.id.pieChart)
-
-        configChartView()
-
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation2)
         bottomNavigationView.selectedItemId = R.id.bnMedicamentos
         bottomNavigationView.setOnItemSelectedListener { item ->
@@ -46,15 +42,4 @@ class Inicio : AppCompatActivity() {
         }
 
     }
-        private fun configChartView(){
-            val pie : Pie = AnyChart.pie()
-            val dataPieChart: MutableList<DataEntry> = mutableListOf()
-
-            for(index in avanceT.indices){
-                dataPieChart.add(ValueDataEntry(tratamiento.elementAt(index), avanceT.elementAt(index)))
-            }
-            pie.data(dataPieChart)
-            pie.title("Avance Tratamiento")
-            chart!!.setChart(pie)
-        }
 }

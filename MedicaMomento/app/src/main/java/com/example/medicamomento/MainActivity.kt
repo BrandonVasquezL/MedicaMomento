@@ -39,7 +39,6 @@ import com.google.android.material.navigation.NavigationView
 import java.util.Locale
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, TextToSpeech.OnInitListener {
-    // ... (resto de tu código) {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerView2: RecyclerView
@@ -48,92 +47,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var isSecondRecyclerViewVisible = false
     private lateinit var medicamentos: List<DBhelper.Medicamento>
     private lateinit var textToSpeech: TextToSpeech
-
-
-
-
-
-
-
-    //Implementacion de autenticacion biometrica
-
-    private var cancellationSignal: android.os.CancellationSignal? = null
-
-    private val authenticationCallback: BiometricPrompt.AuthenticationCallback
-        get() =
-            @RequiresApi(Build.VERSION_CODES.P)
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
-                    super.onAuthenticationError(errorCode, errString)
-                    notificarUsuario("Error de autenticacion: $errString")
-                }
-
-                override  fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?){
-                    super.onAuthenticationSucceeded(result)
-                    notificarUsuario("Autenticacion completada")
-                    //Despues de autenticar, debe mostrar la activity de supervisado
-
-
-
-
-
-
-                }
-
-            }
-
-
-
-    private fun notificarUsuario(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    fun autenticarSupervisor(){
-        val biometricPrompt = BiometricPrompt.Builder(this)
-            .setTitle("Autenticar supervisor")
-            .setSubtitle("Se requiere autenticación")
-            .setDescription("Para cambiar al modo supervisor, coloque su dedo en el lector")
-            .setNegativeButton("Cancelar",this.mainExecutor,
-                DialogInterface.OnClickListener{ dialog, which->
-                notificarUsuario("Autenticacion cancelada")
-            }).build()
-
-        biometricPrompt.authenticate(getCancellationSignal(),mainExecutor,authenticationCallback)
-
-
-    }
-
-
-
-
-    private fun getCancellationSignal(): android.os.CancellationSignal{
-        cancellationSignal = android.os.CancellationSignal()
-        cancellationSignal?.setOnCancelListener {
-            notificarUsuario("La autenticacion fue cancelada por el usuario")
-        }
-        return cancellationSignal as android.os.CancellationSignal
-    }
-
-    private fun checkBiometricSupport(): Boolean {
-        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-
-        if (!keyguardManager.isKeyguardSecure){
-            notificarUsuario("Autenticacion de huella no esta activada en configuracion")
-            return false
-        }
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.USE_BIOMETRIC) != PackageManager.PERMISSION_GRANTED){
-            notificarUsuario("Autenticacion de huella digital no esta habilitada")
-            return false
-        }
-        return if(packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)){
-            true
-        }
-        else true
-    }
-
-
-
-    //
     private var isVoiceInstructionsCompleted = false
     private var voiceInstructionsPlayed = false
     private var isTTSInitialized = false
@@ -258,8 +171,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recyclerView2.adapter = adaptador2
 
 
-
-
         val suspender: Button = findViewById(R.id.btnSuspender)
         val editar: Button = findViewById(R.id.btnEditar)
         editar.isEnabled = false
@@ -294,11 +205,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             suspender.isEnabled = true
         }
 
-
-
-
-
-
         drawerLayout = findViewById(R.id.drawer_layout)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -311,30 +217,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
- fun ocultarAgregarBtn(bnMasMedicamento: AgregarMedicamento){
-    bnMasMedicamento.setVisible(false)
-}
-
-
-
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_supervisado ->
-
-                startActivity(Intent(applicationContext,modoSupervisado::class.java))
-            R.id.nav_supervisor ->
-                autenticarSupervisor()
-
             R.id.nav_registro -> Toast.makeText(this, "ver registros", Toast.LENGTH_SHORT).show()
             R.id.nav_comentario -> startActivity(Intent(applicationContext, Comentarios::class.java))
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
-
-
-
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
