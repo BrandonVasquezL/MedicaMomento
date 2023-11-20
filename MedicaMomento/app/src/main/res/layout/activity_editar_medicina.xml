@@ -82,9 +82,17 @@
             android:id="@+id/btncancelar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancelar"
             android:layout_marginStart="-10dp"
-            android:background="@drawable/boton_redondo"/>
+            android:background="@drawable/boton_redondo"
+            android:text="Cancelar" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/editarvoz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:clickable="true"
+            android:src="@drawable/microfono" />
 
         <Button
             android:id="@+id/btneditado"

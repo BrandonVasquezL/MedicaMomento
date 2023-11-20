@@ -2,22 +2,14 @@ package com.example.medicamomento
 
 
 import android.app.Activity
-import android.app.KeyguardManager
-import android.content.Context
-import android.content.DialogInterface
-
 
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.hardware.biometrics.BiometricPrompt
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
 import android.util.Log
@@ -26,9 +18,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -77,7 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
     private fun speakAndThenRecognize() {
         if (!voiceInstructionsPlayed) {
-            val instructions = "Di 'agregar medicamento' para añadir uno"
+            val instructions = "Hola usuario, recuerda que los comandos estan en el apartado de inicio "
 
             // Reproducir las instrucciones en voz
             textToSpeech.speak(instructions, TextToSpeech.QUEUE_FLUSH, null, null)
@@ -94,7 +84,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startSpeechRecognition()
             }
             voiceInstructionsPlayed=false
-        }, 3000) // Espera 3 segundos, ajusta según sea necesario
+        }, 5000) // Espera 3 segundos, ajusta según sea necesario
     }
 
     // Este método se llama cuando el reconocimiento de voz se completa
@@ -104,15 +94,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             val spokenText = results?.get(0)
-
-            // Verificar si la frase reconocida es "agregar medicamento"
-            if (spokenText?.toLowerCase(Locale.getDefault()) == "agregar medicamento") {
-                // Si la frase coincide, iniciar la actividad AgregarMedicamento
-                startActivity(Intent(applicationContext, AgregarMedicamento::class.java))
-            } else {
-                // Aquí puedes manejar otras frases reconocidas o mostrar un mensaje de error
-                // Por ejemplo, mostrar un Toast indicando que la frase no fue reconocida
-                Toast.makeText(this, "Frase no reconocida", Toast.LENGTH_SHORT).show()
+            // Verificar las diferentes frases reconocidas y realizar acciones correspondientes
+            when (spokenText?.toLowerCase(Locale.getDefault())) {
+                "agregar medicamento" -> startActivity(Intent(applicationContext, AgregarMedicamento::class.java))
+                "editar medicamento" -> {
+                    val intent = Intent(applicationContext, EditarMedicina::class.java)
+                    // Aquí deberías obtener los datos del medicamento seleccionado y pasarlo al Intent
+                    val selectedItemPosition = adapter.getSelectedPosition()
+                    if (selectedItemPosition != RecyclerView.NO_POSITION) {
+                        val medicamento = adapter.getMedicamentoAtPosition(selectedItemPosition)
+                        intent.putExtra("id", medicamento?.id)
+                        intent.putExtra("medicamento", medicamento?.nombre)
+                        intent.putExtra("dosis", medicamento?.dosis)
+                        intent.putExtra("fecha", medicamento?.fecha)
+                        intent.putExtra("hora", medicamento?.horario)
+                        // Agrega los demás datos del medicamento que desees editar
+                    }
+                    startActivity(intent)
+                }
+                "comentarios" -> startActivity(Intent(applicationContext, Comentarios::class.java))
+                else -> {
+                    // Aquí puedes manejar otras frases reconocidas o mostrar un mensaje de error
+                    // Por ejemplo, mostrar un Toast indicando que la frase no fue reconocida
+                    Toast.makeText(this, "Frase no reconocida", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -121,15 +126,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         //Inicializar instruccion de voz
         initializeTextToSpeech()
-
+        //Boton agregar medicamentos sin voz
+        val btnAgregarMed:Button = findViewById(R.id.btnAgregarMedicamento)
 
         //boton agregar medicamentos
         val btnMasmedic : FloatingActionButton = findViewById(R.id.btnMedicamento)
         btnMasmedic.imageTintList = ColorStateList.valueOf(Color.WHITE)
-        /*btnMasmedic.setOnClickListener {
+        btnAgregarMed.setOnClickListener {
             startActivity(Intent(applicationContext, AgregarMedicamento::class.java))
         }
-         */
         btnMasmedic.setOnClickListener{
             speakAndThenRecognize()
         }
@@ -171,7 +176,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recyclerView2.adapter = adaptador2
 
 
-        val suspender: Button = findViewById(R.id.btnSuspender)
+        val suspender: Button = findViewById(R.id.btnAgregarMedicamento)
         val editar: Button = findViewById(R.id.btnEditar)
         editar.isEnabled = false
         suspender.isEnabled= false

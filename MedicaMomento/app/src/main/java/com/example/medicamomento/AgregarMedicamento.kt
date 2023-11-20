@@ -5,32 +5,125 @@ import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Handler
 import android.provider.AlarmClock
 import android.provider.BaseColumns
 import android.provider.MediaStore
+import android.speech.RecognizerIntent
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.ByteArrayOutputStream
+import java.util.Locale
 
 
-class AgregarMedicamento : AppCompatActivity() {
+class AgregarMedicamento : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private lateinit var et_Medicamento: EditText
     private lateinit var et_Dosis: EditText
     private lateinit var et_Fecha: EditText
     private lateinit var et_Hora: EditText
     private lateinit var sp_cant: Spinner
-
+    private lateinit var textToSpeech: TextToSpeech
+    private var isVoiceInstructionsCompleted = false
+    private var voiceInstructionsPlayed = false
+    private var isTTSInitialized = false
+    private lateinit var comandovoz:FloatingActionButton
     var medicamento: String? = null
     var dosis: String? = null
     var fecha: String? = null
     var hora: String? = null
     var cant: String? = null
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val result = textToSpeech.setLanguage(Locale.getDefault())
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TextToSpeech", "Language not supported")
+            }else{
+                isVoiceInstructionsCompleted = true
+                isTTSInitialized=true
+            }
+        } else {
+            Log.e("TextToSpeech", "Initialization failed")
+        }
+    }
+    private fun initializeTextToSpeech() {
+        if (!isTTSInitialized) {
+            textToSpeech = TextToSpeech(this, this)
+        }
+    }
+    private fun startSpeechRecognition() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora...")
+        startActivityForResult(intent, 1)
+    }
+    private fun speakAndThenRecognize() {
+        if (!voiceInstructionsPlayed) {
+            val instructions = "Diga el nombre del medicamento y los numeros que usara en la dosis"
+
+            // Reproducir las instrucciones en voz
+            textToSpeech.speak(instructions, TextToSpeech.QUEUE_FLUSH, null, null)
+
+            // Marcar las instrucciones de voz como reproducidas
+            voiceInstructionsPlayed = true
+        }
+
+        // Iniciar temporizador para esperar antes de iniciar el reconocimiento de voz
+        Handler().postDelayed({
+            // Verificar si las instrucciones de voz se han completado
+            if (isVoiceInstructionsCompleted) {
+                // Iniciar el reconocimiento de voz después del temporizador
+                startSpeechRecognition()
+            }
+            voiceInstructionsPlayed=false
+        }, 5000) // Espera 3 segundos, ajusta según sea necesario
+    }
+
+    // Este método se llama cuando el reconocimiento de voz se completa
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val spokenText = results?.get(0)
+            //Muestra el texto reconocido por la voz en el EditText
+            et_Medicamento=findViewById(R.id.etxt_medicamento)
+            et_Dosis=findViewById(R.id.etxt_dosis)
+            // Divide el texto en palabras
+            val palabras = spokenText?.split("\\s+".toRegex())
+
+            // Itera sobre las palabras y determina si cada una es un número
+            var contieneNumeros = false
+            var dosis = ""
+            var medicamento = ""
+
+            palabras?.forEach { palabra ->
+                if (palabra.matches(Regex("\\d+"))) {
+                    // Si la palabra es un número, agrégala a la dosis
+                    dosis += "$palabra "
+                    contieneNumeros = true
+                } else {
+                    // Si la palabra no es un número, agrégala al medicamento
+                    medicamento += "$palabra "
+                }
+            }
+
+            // Asigna el texto a los EditText correspondientes
+            et_Medicamento.setText(medicamento.trim())
+            et_Dosis.setText(dosis.trim())
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_medicamento)
@@ -39,6 +132,12 @@ class AgregarMedicamento : AppCompatActivity() {
 
         et_Hora = findViewById(R.id.etxt_hora)
         et_Hora.setOnClickListener { showTimePickerDialog() }
+
+        comandovoz=findViewById(R.id.agregarvoz)
+        initializeTextToSpeech()
+        comandovoz.setOnClickListener {
+            speakAndThenRecognize()
+        }
 
         /*cameraPermision = String[]{Manifest.permission.CAMERA, Manifest.Perm}*/
         val btnCamara = findViewById<ImageView>(R.id.btnCamara)

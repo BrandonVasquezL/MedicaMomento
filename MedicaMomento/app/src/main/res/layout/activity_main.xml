@@ -48,14 +48,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="end">
+
             <Button
-                android:id="@+id/btnSuspender"
+                android:id="@+id/btnAgregarMedicamento"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:text="SUSPENDER"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/boton_redondo"
-                />
+                android:text="Agregar" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnMedicamento"
