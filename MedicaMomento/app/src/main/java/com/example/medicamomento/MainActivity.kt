@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var recyclerView2: RecyclerView
     private lateinit var adapter: Adaptador
     private lateinit var adaptador2: Adaptador2
-    private var isSecondRecyclerViewVisible = false
     private lateinit var medicamentos: List<DBhelper.Medicamento>
     private lateinit var textToSpeech: TextToSpeech
     private var isVoiceInstructionsCompleted = false
@@ -224,7 +223,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_registro -> Toast.makeText(this, "ver registros", Toast.LENGTH_SHORT).show()
             R.id.nav_comentario -> startActivity(Intent(applicationContext, Comentarios::class.java))
         }
         drawerLayout.closeDrawer(GravityCompat.START)

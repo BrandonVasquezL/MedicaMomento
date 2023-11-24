@@ -12,11 +12,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Inicio : AppCompatActivity() {
 
-    private var chart: AnyChartView? = null
-
-    private val avanceT = listOf(200,300,400,600)
-    private val tratamiento = listOf("Paracetamol", "Levotiroxina", "Salbutamol", "Naproxeno")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio)
