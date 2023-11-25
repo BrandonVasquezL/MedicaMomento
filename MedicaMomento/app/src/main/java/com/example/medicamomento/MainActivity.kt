@@ -127,7 +127,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initializeTextToSpeech()
         //Boton agregar medicamentos sin voz
         val btnAgregarMed:Button = findViewById(R.id.btnAgregarMedicamento)
-
         //boton agregar medicamentos
         val btnMasmedic : FloatingActionButton = findViewById(R.id.btnMedicamento)
         btnMasmedic.imageTintList = ColorStateList.valueOf(Color.WHITE)
