@@ -3,6 +3,7 @@ package com.example.medicamomento
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
 import com.anychart.chart.common.dataentry.DataEntry
@@ -36,5 +37,13 @@ class Inicio : AppCompatActivity() {
             }
         }
 
+        val agregarMedicamento: Button = findViewById(R.id.agregar_Medicamento)
+        val agregarComentario: Button = findViewById(R.id.agregar_Comentario)
+        agregarMedicamento.setOnClickListener {
+            startActivity(Intent(applicationContext, AgregarMedicamento::class.java))
+        }
+        agregarComentario.setOnClickListener {
+            startActivity(Intent(applicationContext, Comentarios::class.java))
+        }
     }
 }

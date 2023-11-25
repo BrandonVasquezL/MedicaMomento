@@ -49,7 +49,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:text="Perfil médico"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,9 +58,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="90dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
@@ -70,7 +70,7 @@
         android:id="@+id/editTextContainer"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,33 +83,58 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Nombre:"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/etname"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="Nombre"
                 android:inputType="textPersonName" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Edad:"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/edEdad"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="Edad"
                 android:inputType="number" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Tipo de sangre:"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/edSangre"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="Tipo de sangre"
                 android:inputType="textPersonName" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Enfermedades:"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/edEnfermedades"
@@ -120,20 +145,33 @@
                 android:hint="Enfermedades"
                 android:inputType="textPersonName" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Alergias:"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
+
             <EditText
                 android:id="@+id/edAlergias"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="Alergias"
                 android:inputType="textPersonName" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Servicio Medico:"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/edServicio"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="Servicio Médico"
                 android:inputType="textPersonName" />
